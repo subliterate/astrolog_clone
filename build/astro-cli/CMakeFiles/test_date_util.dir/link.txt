@@ -1,1 +1,0 @@
-/usr/bin/cc CMakeFiles/test_date_util.dir/tests/test_date_util.c.o CMakeFiles/test_date_util.dir/src/date_util.c.o -o test_date_util 

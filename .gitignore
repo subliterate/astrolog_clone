@@ -1,0 +1,8 @@
+*.o
+/astrolog
+/astrolog.as~
+/build/
+/astro-cli/build/
+/astro-cli/bin/
+/astro-cli/tests/bin/
+/astro-cli/tests/test_date_util
