@@ -201,7 +201,8 @@ LNextLine:
 
   // Here either do a normal chart or some kind of relationship chart.
 
-  if (!us.nRel) {
+    ciMain = ciCore;
+    if (!us.nRel) {
 #ifndef WIN
     // If chart info not in memory yet, then prompt the user for it.
     if (!is.fHaveInfo && !FInputData(szTtyCore))
@@ -257,6 +258,7 @@ LNextLine:
     }
 #endif
   }
+
 
 LDone:
   iLine++;
@@ -3018,12 +3020,11 @@ void FinalizeProgram(flag fSkip)
 int main(int argc, char **argv)
 {
 #else
-int main()
+int main(int argc, char *argv[])
 {
-  int argc;
-  char **argv;
 #endif
   char szCommandLine[cchSzMax], *rgsz[MAXSWITCHES];
+  flag fT;
 #ifdef BETA
   char szBeta[cchSzMax];
 #endif
@@ -3052,11 +3053,16 @@ LBegin:
     is.fSzPersist = fFalse;
   }
   is.szProgName = argv[0];
-  if (FProcessSwitches(argc, argv)) {
+  // If there are switches, process them. If an error occurred, print an
+  // error message and exit.
+  fT = FProcessSwitches(argc, argv);
+  if (fT != fTrue) {
     if (!us.fNoSwitches && us.fLoopInit) {
       us.fNoSwitches = fTrue;
       goto LBegin;
     }
+    Terminate(tcError);
+  } else {
     Action();
   }
   if (us.fLoop || us.fNoQuit) {  // If -Q in effect loop back and get switch

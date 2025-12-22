@@ -1,0 +1,55 @@
+Swiss Ephemeris ephemeris file index, indicating which files cover which years:
+  sepl* files contain positions of planets (Mercury through Pluto).
+  semo* files contain positions of Earth's Moon.
+  seas* files contain asteroids (Ceres, Pallas, Juno, Vesta, Chiron, & Pholus).
+
+Files seplm132.se1 / semom132.se1 / seasm132.se1 cover -12998 BC - -12601 BC.
+Files seplm126.se1 / semom126.se1 / seasm126.se1 cover -12601 BC - -12001 BC.
+Files seplm120.se1 / semom120.se1 / seasm120.se1 cover -12001 BC - -11401 BC.
+Files seplm114.se1 / semom114.se1 / seasm114.se1 cover -11401 BC - -10801 BC.
+Files seplm108.se1 / semom108.se1 / seasm108.se1 cover -10801 BC - -10201 BC.
+Files seplm102.se1 / semom102.se1 / seasm102.se1 cover -10201 BC - -9601 BC.
+Files seplm96.se1  / semom96.se1  / seasm96.se1  cover  -9601 BC - -9001 BC.
+Files seplm90.se1  / semom90.se1  / seasm90.se1  cover  -9001 BC - -8401 BC.
+Files seplm84.se1  / semom84.se1  / seasm84.se1  cover  -8401 BC - -7801 BC.
+Files seplm78.se1  / semom78.se1  / seasm78.se1  cover  -7801 BC - -7201 BC.
+Files seplm72.se1  / semom72.se1  / seasm72.se1  cover  -7201 BC - -6601 BC.
+Files seplm66.se1  / semom66.se1  / seasm66.se1  cover  -6601 BC - -6001 BC.
+Files seplm60.se1  / semom60.se1  / seasm60.se1  cover  -6001 BC - -5401 BC.
+Files seplm54.se1  / semom54.se1  / seasm54.se1  cover  -5401 BC - -4801 BC. +
+Files seplm48.se1  / semom48.se1  / seasm48.se1  cover  -4801 BC - -4201 BC. +
+Files seplm42.se1  / semom42.se1  / seasm42.se1  cover  -4201 BC - -3601 BC. +
+Files seplm36.se1  / semom36.se1  / seasm36.se1  cover  -3601 BC - -3001 BC. +
+Files seplm30.se1  / semom30.se1  / seasm30.se1  cover  -3001 BC - -2401 BC. +
+Files seplm24.se1  / semom24.se1  / seasm24.se1  cover  -2401 BC - -1801 BC. +
+Files seplm18.se1  / semom18.se1  / seasm18.se1  cover  -1801 BC - -1201 BC. +
+Files seplm12.se1  / semom12.se1  / seasm12.se1  cover  -1201 BC -  -601 BC. +
+Files seplm06.se1  / semom06.se1  / seasm06.se1  cover   -601 BC -    -1 BC. +
+Files sepl_00.se1  / semo_00.se1  / seas_00.se1  cover     -1 BC -   600 AD. +
+Files sepl_06.se1  / semo_06.se1  / seas_06.se1  cover    600 AD -  1200 AD. +
+Files sepl_12.se1  / semo_12.se1  / seas_12.se1  cover   1200 AD -  1800 AD. +
+Files sepl_18.se1  / semo_18.se1  / seas_18.se1  cover   1800 AD -  2400 AD. **
+Files sepl_24.se1  / semo_24.se1  / seas_24.se1  cover   2400 AD -  3000 AD. +
+Files sepl_30.se1  / semo_30.se1  / seas_30.se1  cover   3000 AD -  3600 AD. +
+Files sepl_36.se1  / semo_36.se1  / seas_36.se1  cover   3600 AD -  4200 AD. +
+Files sepl_42.se1  / semo_42.se1  / seas_42.se1  cover   4200 AD -  4800 AD. +
+Files sepl_48.se1  / semo_48.se1  / seas_48.se1  cover   4800 AD -  5400 AD. +
+Files sepl_54.se1  / semo_54.se1  / seas_54.se1  cover   5400 AD -  6000 AD.
+Files sepl_60.se1  / semo_60.se1  / seas_60.se1  cover   6000 AD -  6600 AD.
+Files sepl_66.se1  / semo_66.se1  / seas_66.se1  cover   6600 AD -  7200 AD.
+Files sepl_72.se1  / semo_72.se1  / seas_72.se1  cover   7200 AD -  7800 AD.
+Files sepl_78.se1  / semo_78.se1  / seas_78.se1  cover   7800 AD -  8400 AD.
+Files sepl_84.se1  / semo_84.se1  / seas_84.se1  cover   8400 AD -  9000 AD.
+Files sepl_90.se1  / semo_90.se1  / seas_90.se1  cover   9000 AD -  9600 AD.
+Files sepl_96.se1  / semo_96.se1  / seas_96.se1  cover   9600 AD - 10200 AD.
+Files sepl_102.se1 / semo_102.se1 / seas_102.se1 cover  10200 AD - 10800 AD.
+Files sepl_108.se1 / semo_108.se1 / seas_108.se1 cover  10800 AD - 11400 AD.
+Files sepl_114.se1 / semo_114.se1 / seas_114.se1 cover  11400 AD - 12000 AD.
+Files sepl_120.se1 / semo_120.se1 / seas_120.se1 cover  12000 AD - 12600 AD.
+Files sepl_126.se1 / semo_126.se1 / seas_126.se1 cover  12600 AD - 13200 AD.
+Files sepl_132.se1 / semo_132.se1 / seas_132.se1 cover  13200 AD - 13800 AD.
+Files sepl_138.se1 / semo_138.se1 / seas_138.se1 cover  13800 AD - 14400 AD.
+Files sepl_144.se1 / semo_144.se1 / seas_144.se1 cover  14400 AD - 15000 AD.
+Files sepl_150.se1 / semo_150.se1 / seas_150.se1 cover  15000 AD - 15600 AD.
+Files sepl_156.se1 / semo_156.se1 / seas_156.se1 cover  15600 AD - 16200 AD.
+Files sepl_162.se1 / semo_162.se1 / seas_162.se1 cover  16200 AD - 16800 AD.

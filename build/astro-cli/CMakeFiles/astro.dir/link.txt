@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/astro.dir/src/main.c.o CMakeFiles/astro.dir/src/command.c.o CMakeFiles/astro.dir/src/config.c.o CMakeFiles/astro.dir/src/engine.c.o CMakeFiles/astro.dir/src/parser.c.o CMakeFiles/astro.dir/src/date_util.c.o -o astro  ../libastrolog_core.a 

@@ -3,12 +3,12 @@
 ; The contents of this file can be automatically generated with the
 ; "File / Save Settings" menu command, or with the -od command switch.
 
--z 8:00W                ; Default time zone     [hours W or E of UTC   ]
--z0 Autodetect          ; Default Daylight time [0 standard, 1 daylight]
--zl 122W19'59 47N36'35  ; Default location      [longitude and latitude]
--zv 167ft               ; Default elevation     [in feet or meters     ]
--zf 59F                 ; Default temperature   [in Fahren. or Celsius ]
--zj "Current moment now" "Seattle, WA, USA" ; Default name and location
+-z 12:00E                ; Default time zone     [hours W or E of UTC   ]
+-z0 Autodetect         ; Default Daylight time [0 standard, 1 daylight]
+-zl 176E14'34 38S09'06  ; Default location      [longitude and latitude]
+-zv 320meters               ; Default elevation     [in feet or meters     ]
+-zf 65F                 ; Default temperature   [in Fahren. or Celsius ]
+-zj "Current moment now" "Rotorua, BayOfPlenty, NZ" ; Default name and location
 
 -Yz 0   ; Time minute addition to be used if "now" charts are offset.
 ;-n      ; Comment out this line to not start with chart for "now".
@@ -49,8 +49,8 @@ _Yv     ; European length units     ["_Yv" is imperial, "=Yv" is metric]
 ; FILE PATHS (-Yi1 through -Yi9):
 ; For example, point -Yi1 to ephemeris dir, -Yi2 to chart files dir, etc.
 
--Yi1 "C:\Astrolog\ephem"
--Yi2 "C:\Astrolog\source"
+-Yi1 "/home/terry/astrolog/ephem"
+;-Yi2 "C:\Astrolog\source"
 
 
 ; DEFAULT RESTRICTIONS:

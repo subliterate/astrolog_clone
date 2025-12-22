@@ -1,0 +1,11 @@
+/home/noddy/astrolog_clone/build/CMakeFiles/astrolog_core.dir
+/home/noddy/astrolog_clone/build/CMakeFiles/astrolog.dir
+/home/noddy/astrolog_clone/build/CMakeFiles/test.dir
+/home/noddy/astrolog_clone/build/CMakeFiles/edit_cache.dir
+/home/noddy/astrolog_clone/build/CMakeFiles/rebuild_cache.dir
+/home/noddy/astrolog_clone/build/astro-cli/CMakeFiles/astro.dir
+/home/noddy/astrolog_clone/build/astro-cli/CMakeFiles/test_date_util.dir
+/home/noddy/astrolog_clone/build/astro-cli/CMakeFiles/smoke_test_target.dir
+/home/noddy/astrolog_clone/build/astro-cli/CMakeFiles/test.dir
+/home/noddy/astrolog_clone/build/astro-cli/CMakeFiles/edit_cache.dir
+/home/noddy/astrolog_clone/build/astro-cli/CMakeFiles/rebuild_cache.dir

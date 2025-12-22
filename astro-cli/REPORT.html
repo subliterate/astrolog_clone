@@ -1,0 +1,42 @@
+<h1 id="astro-cli-analysis-test-regime">Astro-CLI Analysis &amp; Test Regime</h1>
+<h2 id="overview">Overview</h2>
+<ul>
+<li><code>astro-cli</code> wraps the legacy <code>astrolog</code> binary with commands for <code>chart</code>, <code>predict</code>, <code>data</code>, and <code>config</code>, layered as <code>main</code> → <code>command</code> (business rules) → <code>engine</code> (process launch) → <code>parser</code> (screen-scrape helpers) plus <code>config</code>/<code>date_util</code>.</li>
+<li>Default CLI behaviour still depends on the real <code>astrolog</code> executable being on <code>PATH</code> or provided via <code>ASTROLOG_BIN</code>. Tests now default to a bundled stub to avoid platform GLIBC version mismatches.</li>
+</ul>
+<h2 id="consistency-review">Consistency Review</h2>
+<ul>
+<li><strong>Architecture</strong>: Separation of concerns is clear, but command handlers duplicate date/location/config hydration logic; consider extracting helpers to keep behaviour aligned across <code>data</code>/<code>chart</code>/<code>predict</code>.</li>
+<li><strong>Style</strong>: Mostly 4-space indents but with stray 2-space blocks; snake_case naming is consistent inside <code>astro-cli</code> yet differs from the legacy PascalCase macro style in the root project.</li>
+<li><strong>Option parsing</strong>: <code>get_option</code> is minimal (single-pass, no validation of missing option values, no support for repeated flags). Subcommand usage printing is good, but argument validation is uneven across commands.</li>
+<li><strong>Buffers &amp; safety</strong>: Several <code>strncpy</code> calls skip explicit null termination when input length meets the buffer limit; switching to <code>snprintf</code> or forcing <code>buf[n-1] = '\0'</code> would harden against overlong input. <code>config_set_value</code> uses <code>system("mkdir -p")</code> instead of <code>mkdir</code>, which is fragile and inherits shell injection risk via <code>$HOME</code>.</li>
+<li><strong>Engine exit codes</strong>: <code>run_astrolog_command</code> discards the child exit status, so failing <code>astrolog</code> invocations may still be reported as success.</li>
+<li><strong>Parser brittleness</strong>: <code>parser.c</code> relies on column positions (<code>buffer[14] == 'R'</code> and fixed-width slicing) and simplistic header detection; any upstream format change will silently drop rows or mis-flag retrograde states. Aspect parsing repeatedly scans lines with <code>strchr</code>/<code>strstr</code>, leaving room for edge-case mis-detection.</li>
+</ul>
+<h2 id="test-regime">Test Regime</h2>
+<h3 id="unit-tests">Unit tests</h3>
+<ul>
+<li><code>tests/test_date_util.c</code>: Validates parsing/formatting, increment, and comparisons (including leap year rollover).</li>
+<li>NEW <code>tests/test_config.c</code>: Temp <code>HOME</code> sandbox for config round-trip, update-in-place, and missing-key handling.</li>
+<li>NEW <code>tests/test_parser.c</code>: Exercises <code>-v</code> body parsing and <code>-a</code> aspect parsing with fixtures matching current scraping assumptions.</li>
+<li>NEW <code>tests/test_engine.c</code>: Verifies <code>run_astrolog_command</code> honours <code>ASTROLOG_BIN</code> and captures stubbed output.</li>
+</ul>
+<h3 id="integration-tests-testssmoke.sh">Integration tests (<code>tests/smoke.sh</code>)</h3>
+<ul>
+<li>Defaults <code>ASTROLOG_BIN</code> to <code>tests/fake_astrolog.sh</code>, which emits predictable <code>-v</code> and <code>-a</code> output so the CLI paths for <code>help</code>, <code>config</code>, <code>data positions --output csv</code>, <code>chart natal</code>, and <code>predict transits</code> all execute deterministically.</li>
+<li>Optional real-binary check is gated by <code>CHECK_REAL_ASTROLOG=1</code> and <code>REAL_ASTROLOG_BIN=/path/to/astrolog</code> to avoid GLIBC version issues on hosts where the bundled binary cannot run.</li>
+</ul>
+<h3 id="how-to-run">How to run</h3>
+<ul>
+<li>Full suite (executed): <code>cd astro-cli &amp;&amp; make clean &amp;&amp; make test</code>
+<ul>
+<li>Uses the stub by default; override with <code>make ASTROLOG_BIN=/path/to/astrolog CHECK_REAL_ASTROLOG=1 integration-test</code> to hit the real binary.</li>
+</ul></li>
+</ul>
+<h2 id="recommendations">Recommendations</h2>
+<ul>
+<li>Harden string handling: replace <code>strncpy</code> uses with bounded <code>snprintf</code> or explicit terminators; validate option presence/length before copy.</li>
+<li>Normalize shared chart setup into helpers to cut duplication and reduce divergence between <code>data</code>, <code>chart</code>, and <code>predict</code>.</li>
+<li>Make parser more resilient (tokenize on whitespace, tolerate variable spacing, and add negative tests for malformed rows); add fixtures sourced from real <code>astrolog</code> output once GLIBC compatibility is resolved.</li>
+<li>Replace <code>system("mkdir -p")</code> with <code>mkdir</code>/<code>stat</code> to avoid shell dependency and improve portability; capture <code>pclose</code>/child exit codes in <code>run_astrolog_command</code> for accurate error reporting.</li>
+</ul>
