@@ -39,7 +39,7 @@ int parse_v_output(const char* raw_output, PlanetInfo* planets, int max_planets)
             continue;
         }
         
-        strncpy(buffer, line, line_len);
+        memcpy(buffer, line, line_len);
         buffer[line_len] = '\0';
 
         // Stop if we reach the element table summary
@@ -64,7 +64,7 @@ int parse_v_output(const char* raw_output, PlanetInfo* planets, int max_planets)
         char* end = name_buf + strlen(name_buf) - 1;
         while(end > name_buf && isspace((unsigned char)*end)) end--;
         *(end + 1) = 0;
-        strncpy(p.name, name_buf, sizeof(p.name)-1);
+        snprintf(p.name, sizeof(p.name), "%s", name_buf);
 
         // Extract Degrees, Sign, Minutes
         sscanf(buffer + 6, "%d%3s%d", &p.degrees, p.sign, &p.minutes);

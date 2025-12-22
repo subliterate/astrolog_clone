@@ -37,6 +37,12 @@ $(BUILD_DIR) $(BIN_DIR) $(TEST_DIR)/bin:
 
 tests: $(TEST_BINS)
 
+test: tests
+	@for t in $(TEST_BINS); do \
+		echo "Running $$t"; \
+		$$t || exit 1; \
+	done
+
 $(TEST_DIR)/bin/test_config: $(TEST_DIR)/test_config.c $(SRC_DIR)/config.c | $(TEST_DIR)/bin
 	$(CC) $(CPPFLAGS) -I$(TEST_DIR) $(CFLAGS) $^ -o $@
 
@@ -52,4 +58,4 @@ $(TEST_DIR)/bin/test_parser: $(TEST_DIR)/test_parser.c $(SRC_DIR)/parser.c | $(T
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR) $(TEST_DIR)/bin
 
-.PHONY: all clean tests
+.PHONY: all clean tests test

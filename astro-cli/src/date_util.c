@@ -32,7 +32,7 @@ int parse_date_string(const char* date_str, Date* date) {
 int date_to_string(const Date* date, char* str, size_t size) {
     if (!date || !str) return -1;
     int written = snprintf(str, size, "%04d-%02d-%02d", date->year, date->month, date->day);
-    if (written >= size || written < 0) {
+    if (written < 0 || (size_t)written >= size) {
         return -1; // Buffer too small or error
     }
     return 0;

@@ -14,6 +14,9 @@ if [[ ! -x "$ASTRO_BIN" ]]; then
   exit 1
 fi
 
+# Run unit tests via the Makefile before the smoke checks.
+make -C "$ROOT" test >/dev/null 2>&1 || fail "unit tests"
+
 # This check is only for the REAL_ASTROLOG_BIN check at the end
 # if [[ ! -x "$ASTROLOG_BIN" ]]; then
 #   echo "astrolog binary not found at $ASTROLOG_BIN" >&2
