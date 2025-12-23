@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h> // For sscanf
+#include <time.h>
 
 // Helper array for days in each month (non-leap year)
 static const int days_in_month[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -38,6 +39,19 @@ int date_to_string(const Date* date, char* str, size_t size) {
     return 0;
 }
 
+int get_current_date(Date* date) {
+    if (!date) return -1;
+    time_t now = time(NULL);
+    struct tm *local = localtime(&now);
+    if (!local) {
+        return -1;
+    }
+    date->year = local->tm_year + 1900;
+    date->month = local->tm_mon + 1;
+    date->day = local->tm_mday;
+    return 0;
+}
+
 void increment_date(Date* date) {
     date->day++;
     int days_in_current_month = get_days_in_month(date->year, date->month);
@@ -49,6 +63,13 @@ void increment_date(Date* date) {
             date->month = 1;
             date->year++;
         }
+    }
+}
+
+void add_days(Date* date, int days) {
+    if (!date || days <= 0) return;
+    for (int i = 0; i < days; i++) {
+        increment_date(date);
     }
 }
 

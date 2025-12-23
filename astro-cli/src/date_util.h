@@ -17,8 +17,16 @@ int parse_date_string(const char* date_str, Date* date);
 // Returns 0 on success, -1 on failure.
 int date_to_string(const Date* date, char* str, size_t size);
 
+// Sets Date to the current local date.
+// Returns 0 on success, -1 on failure.
+int get_current_date(Date* date);
+
 // Increments the given Date struct by one day.
 void increment_date(Date* date);
+
+// Adds a number of days to the given Date struct.
+// Only supports non-negative days.
+void add_days(Date* date, int days);
 
 // Compares two Date structs.
 // Returns: < 0 if date1 is earlier, 0 if dates are equal, > 0 if date1 is later.
