@@ -28,6 +28,21 @@ static const AspectDef rgAspects[] = {
 
 static const int cAspects = sizeof(rgAspects) / sizeof(rgAspects[0]);
 
+static const char* rgDefaultBodies[] = {
+    "Sun",
+    "Moon",
+    "Mercury",
+    "Venus",
+    "Mars",
+    "Jupiter",
+    "Saturn",
+    "Uranus",
+    "Neptune",
+    "Pluto"
+};
+
+static const int cDefaultBodies = sizeof(rgDefaultBodies) / sizeof(rgDefaultBodies[0]);
+
 // A simple helper to find an option (e.g., --date) and return its value.
 // Returns the value, or NULL if not found.
 const char* get_option(int argc, char* argv[], const char* option_name) {
@@ -98,6 +113,15 @@ static int parse_csv_list(const char* input, char items[][MAX_NAME_LEN], int max
             count++;
         }
         token = strtok(NULL, ",");
+    }
+    return count;
+}
+
+static int load_default_bodies(char items[][MAX_NAME_LEN], int max_items) {
+    int count = 0;
+    for (int i = 0; i < cDefaultBodies && count < max_items; i++) {
+        snprintf(items[count], MAX_NAME_LEN, "%s", rgDefaultBodies[i]);
+        count++;
     }
     return count;
 }
@@ -213,6 +237,13 @@ static void print_aspect_list() {
     printf("Aspects (index: code - name):\n");
     for (int i = 0; i < cAspects; i++) {
         printf("  %d: %s - %s\n", i + 1, rgAspects[i].szCode, rgAspects[i].szName);
+    }
+}
+
+static void print_default_body_list() {
+    printf("Default bodies:\n");
+    for (int i = 0; i < cDefaultBodies; i++) {
+        printf("  %s\n", rgDefaultBodies[i]);
     }
 }
 
@@ -453,12 +484,14 @@ void print_predict_usage() {
     printf("  --start <YYYY-MM-DD>  Start date for the search. Default: today.\n");
     printf("  --end <YYYY-MM-DD>    End date for the search. Default: start + 30 days.\n");
     printf("  --days <n>            Range length in days when --end is omitted. Default: 30.\n");
-    printf("  --body <name(s)>      Transiting body list (comma-separated). Default: Sun.\n");
-    printf("  --target-body <name>  Natal body list (comma-separated). Default: Moon.\n");
+    printf("  --body <name(s)>      Transiting body list (comma-separated). Default: all solar system bodies (except Earth).\n");
+    printf("  --target-body <name>  Natal body list (comma-separated). Default: all solar system bodies (except Earth).\n");
     printf("  --target <name(s)>    Alias for --target-body.\n");
     printf("  --aspect <name(s)>    Aspect list (comma-separated). Default: all aspects.\n");
     printf("  --list-aspects        Print indexed aspect list and exit.\n\n");
     print_aspect_list();
+    printf("\n");
+    print_default_body_list();
     printf("\nExamples:\n");
     printf("  astro predict transits --body Sun,Mars --target Moon,Venus --aspect 1,4\n");
     printf("  astro predict transits --start 2025-12-24 --days 30 --body Jupiter --target Moon\n");
@@ -539,8 +572,7 @@ int handle_predict_command(int argc, char *argv[]) {
                 return 1;
             }
         } else {
-            snprintf(bodies[0], MAX_NAME_LEN, "Sun");
-            body_count = 1;
+            body_count = load_default_bodies(bodies, MAX_LIST_ITEMS);
         }
 
         if (opt_target_body) {
@@ -550,8 +582,7 @@ int handle_predict_command(int argc, char *argv[]) {
                 return 1;
             }
         } else {
-            snprintf(targets[0], MAX_NAME_LEN, "Moon");
-            target_count = 1;
+            target_count = load_default_bodies(targets, MAX_LIST_ITEMS);
         }
 
         if (opt_aspect) {
