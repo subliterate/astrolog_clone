@@ -75,10 +75,25 @@ static char* test_missing_key_returns_error() {
     return 0;
 }
 
+static char* test_defaults_when_missing() {
+  char temp_home[MAX_PATH_LEN];
+  mu_assert("failed to create temp HOME", set_temp_home(temp_home, sizeof(temp_home)) == 0);
+
+  char value[MAX_VALUE_LEN];
+  mu_assert("default natal.date missing", config_get_value("natal.date", value, sizeof(value)) == 0);
+  mu_assert("default natal.date incorrect", strcmp(value, "1972-04-08") == 0);
+  mu_assert("default natal.location missing", config_get_value("natal.location", value, sizeof(value)) == 0);
+  mu_assert("default natal.location incorrect", strcmp(value, "176:14E 38:08S") == 0);
+
+  cleanup_home(temp_home);
+  return 0;
+}
+
 static char* all_tests() {
     mu_run_test(test_set_and_get_value);
     mu_run_test(test_updates_existing_key);
     mu_run_test(test_missing_key_returns_error);
+    mu_run_test(test_defaults_when_missing);
     return 0;
 }
 

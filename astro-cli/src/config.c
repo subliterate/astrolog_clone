@@ -5,8 +5,32 @@
 #include <sys/stat.h>
 #include <errno.h>
 
+typedef struct {
+  const char* szKey;
+  const char* szValue;
+} ConfigDefault;
+
+static const ConfigDefault rgConfigDefaults[] = {
+  {"natal.date", "1972-04-08"},
+  {"natal.time", "0:00"},
+  {"natal.tz", "-12"},
+  {"natal.location", "176:14E 38:08S"}
+};
+
+static const size_t cConfigDefaults = sizeof(rgConfigDefaults) / sizeof(rgConfigDefaults[0]);
+
 const char* CONFIG_DIR_REL = "/.config/astro";
 const char* CONFIG_FILE_NAME = "config.ini";
+
+static int ConfigGetDefaultValue(const char* szKey, char* value_buffer, size_t buffer_size) {
+  for (size_t i = 0; i < cConfigDefaults; i++) {
+    if (strcmp(rgConfigDefaults[i].szKey, szKey) == 0) {
+      snprintf(value_buffer, buffer_size, "%s", rgConfigDefaults[i].szValue);
+      return 0;
+    }
+  }
+  return -1;
+}
 
 int get_config_path(char* path_buffer, size_t buffer_size) {
     const char* home_dir = getenv("HOME");
@@ -48,13 +72,13 @@ int ensure_config_path_exists() {
 int config_get_value(const char* key, char* value_buffer, size_t buffer_size) {
     char config_path[MAX_PATH_LEN];
     if (get_config_path(config_path, sizeof(config_path)) != 0) {
-        return -1;
+        return ConfigGetDefaultValue(key, value_buffer, buffer_size);
     }
 
     FILE* file = fopen(config_path, "r");
     if (!file) {
         // This is not an error if the file just doesn't exist yet.
-        return -1;
+        return ConfigGetDefaultValue(key, value_buffer, buffer_size);
     }
 
     char line[MAX_CONFIG_LINE_LEN];
@@ -91,7 +115,10 @@ int config_get_value(const char* key, char* value_buffer, size_t buffer_size) {
     }
 
     fclose(file);
-    return found;
+    if (found == 0) {
+        return 0;
+    }
+    return ConfigGetDefaultValue(key, value_buffer, buffer_size);
 }
 
 // A simple struct to hold key-value pairs from the config file
