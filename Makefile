@@ -17,6 +17,9 @@
 # library, and if applicable, the main X library.
 #
 NAME = astrolog
+CLI_DIR = astro-cli
+CLI_EXEC = astro
+
 OBJS = astrolog.o atlas.o calc.o charts0.o charts1.o charts2.o charts3.o\
  data.o express.o general.o intrpret.o io.o matrix.o placalc.o placalc2.o\
  xdata.o xgeneral.o xdevice.o xcharts0.o xcharts1.o xcharts2.o xscreen.o\
@@ -29,9 +32,16 @@ LIBS = -lm -lX11 -ldl -s
 CPPFLAGS = -O -Wno-write-strings -Wno-narrowing -Wno-comment
 RM = rm -f
 
+# Default target builds both binaries
+all: $(NAME) $(CLI_EXEC)
+
 $(NAME): $(OBJS)
 	cc -o $(NAME) $(OBJS) $(LIBS)
 
+$(CLI_EXEC):
+	$(MAKE) -C $(CLI_DIR)
+	cp $(CLI_DIR)/bin/$(CLI_EXEC) .
+
 clean:
-	$(RM) $(OBJS) $(NAME)
-#
+	$(RM) $(OBJS) $(NAME) $(CLI_EXEC)
+	$(MAKE) -C $(CLI_DIR) clean
